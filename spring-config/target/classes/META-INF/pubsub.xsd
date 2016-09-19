@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://ffan.code.com/schema/pubsub"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:tool="http://www.springframework.org/schema/tool"
+	targetNamespace="http://ffan.code.com/schema/pubsub">
+
+	<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+	<xsd:import namespace="http://www.springframework.org/schema/beans" />
+	<xsd:import namespace="http://www.springframework.org/schema/tool" />
+
+	<xsd:annotation>
+		<xsd:documentation><![CDATA[ Namespace support for the subpub services provided by subpub . ]]></xsd:documentation>
+	</xsd:annotation>
+
+	<xsd:complexType name="subType">
+		<xsd:attribute name="id" type="xsd:ID" use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ The unique identifier for a bean.  ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	
+		<xsd:attribute name="appId" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ Typically when Pubsub is configured as a server  the Administrator is asked. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="url" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ Typically when Pubsub is configured as a server  the Administrator is asked. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="key" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ Typically when Pubsub is configured as a server  the Administrator is asked. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="pubType">
+		<xsd:attribute name="id" type="xsd:ID" use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ the ID is uniqueness  ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="appId" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ Typically when Pubsub is configured as a server  the Administrator is asked. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="url" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ Typically when Pubsub is configured as a server  the Administrator is asked. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+		<xsd:attribute name="key" type="xsd:string" use="required">
+			<xsd:annotation>
+				<xsd:documentation><![CDATA[ Typically when Pubsub is configured as a server  the Administrator is asked. ]]></xsd:documentation>
+			</xsd:annotation>
+		</xsd:attribute>
+	</xsd:complexType>
+	<xsd:complexType name="httpType">
+				<xsd:attribute name="id" type="xsd:ID">
+					<xsd:annotation>
+						<xsd:documentation><![CDATA[ The unique identifier for a bean. ]]></xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="maxCon" type="xsd:integer" use="optional"
+					default="10">
+					<xsd:annotation>
+						<xsd:documentation><![CDATA[ max Connections. ]]></xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="rtimeOut" type="xsd:integer" use="optional" default="2000">
+					<xsd:annotation>
+						<xsd:documentation><![CDATA[ the request TimeOut. ]]></xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="ctimeOut" type="xsd:integer" use="optional" default="2000">
+					<xsd:annotation>
+						<xsd:documentation><![CDATA[ the connect TimeOut. ]]></xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="stimeOut" type="xsd:integer" use="optional" default="2000">
+					<xsd:annotation>
+						<xsd:documentation><![CDATA[ The socket TimeOut. ]]></xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+				<xsd:attribute name="idleClose" type="xsd:integer" use="optional" default="180000">
+					<xsd:annotation>
+						<xsd:documentation><![CDATA[ max idle count. 3*60*1000]]></xsd:documentation>
+					</xsd:annotation>
+				</xsd:attribute>
+	</xsd:complexType>
+
+	
+
+	
+	<xsd:element name="sub" type="subType">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[ The sub config ]]></xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="pub" type="pubType">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[ The pub config ]]></xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+	<xsd:element name="http" type="httpType">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[ The http config parameter ]]></xsd:documentation>
+		</xsd:annotation>
+	</xsd:element>
+
+</xsd:schema>

@@ -1,0 +1,61 @@
+<!--
+ - Copyright 1999-2011 Alibaba Group.
+ -  
+ - Licensed under the Apache License, Version 2.0 (the "License");
+ - you may not use this file except in compliance with the License.
+ - You may obtain a copy of the License at
+ -  
+ -      http://www.apache.org/licenses/LICENSE-2.0
+ -  
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS,
+ - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ - See the License for the specific language governing permissions and
+ - limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pubsub="http://ffan.code.com/schema/pubsub"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
+    http://ffan.code.com/schema/pubsub http://ffan.code.com/schema/pubsub/pubsub.xsd
+    ">
+	 <pubsub:pub id="testPub" url="http://10.213.57.148:10191/topics/default-owl-biz/v1" appId="36" key="fd85d6e0b41c430eaf62bdbba0a5a83d" />
+	 <pubsub:sub id="testSub" url="http://10.213.57.148:10192/topics/73/test/v1?group=risk_beacon" appId="73" key="0de28842dab146f5b6b726d1d2d93867" />
+	 <pubsub:http id="testhttp"/>
+   	<bean id="myPub" class="com.wanda.ffan.pub.HandleMassege">
+   	<property name="http" ref="testhttp"/>
+   	<property name="pub" ref="testPub"/>
+   	<property name="httpClient" ref="httpClient"/>
+   	</bean>
+   	
+   	<bean id="httpClientConnectionManager"
+		class="org.apache.http.impl.conn.PoolingHttpClientConnectionManager"
+		destroy-method="close">
+		<!-- 最大连接数 -->
+		<property name="maxTotal" value="200" />
+		<!-- 设置每个主机地址的并发数 -->
+		<property name="defaultMaxPerRoute" value="50" />
+	</bean>
+
+	<!-- httpclient对象构建器 -->
+	<bean id="httpClientBuilder" class="org.apache.http.impl.client.HttpClientBuilder">
+		<!-- 设置连接管理器 -->
+		<property name="connectionManager" ref="httpClientConnectionManager" />
+		<property name="defaultRequestConfig" ref="requestConfig"/>
+	</bean>
+	<!-- 定义Httpclient对象 -->
+	<bean id="httpClient" class="org.apache.http.impl.client.CloseableHttpClient" factory-bean="httpClientBuilder" factory-method="build" />
+	<bean id="requestConfigBuilder" class="org.apache.http.client.config.RequestConfig.Builder">
+		<!-- 创建连接的最长时间 -->
+		<property name="connectTimeout" value="100"/>
+		<!-- 从连接池中获取到连接的最长时间 -->
+		<property name="connectionRequestTimeout" value="500"/>
+		<!-- 数据传输的最长时间 -->
+		<property name="socketTimeout" value="10000"/>
+		<!-- 提交请求前测试连接是否可用 -->
+		<property name="staleConnectionCheckEnabled" value="true"/>
+	</bean>
+	<!-- 定义请求参数 -->
+	<bean id="requestConfig" class="org.apache.http.client.config.RequestConfig" factory-bean="requestConfigBuilder" factory-method="build"/>
+ 
+</beans>
